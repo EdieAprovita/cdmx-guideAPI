@@ -11,7 +11,7 @@ import generateToken from "../utils/generateToken";
  * @returns {Object} User
  */
 
-exports.login = asyncHandler(async (req: Request, res: Response | any) => {
+export const login = asyncHandler(async (req: Request, res: Response | any) => {
   const { username, password } = req.body;
 
   const user = await User.findOne({ username });
@@ -53,7 +53,7 @@ exports.login = asyncHandler(async (req: Request, res: Response | any) => {
  * @returns {Object} User
  */
 
-exports.register = asyncHandler(async (req: Request, res: Response | any) => {
+export const register = asyncHandler(async (req: Request, res: Response | any) => {
   try {
     const { username, email, password, role } = req.body;
 
@@ -85,7 +85,7 @@ exports.register = asyncHandler(async (req: Request, res: Response | any) => {
       });
     }
   } catch (error) {
-    res.status(500).json({
+    res.status(404).json({
       message: "The user could not be registered",
       success: false,
       error: `${error}`,
@@ -100,7 +100,7 @@ exports.register = asyncHandler(async (req: Request, res: Response | any) => {
  * @returns {Object} User
  */
 
-exports.getUserProfile = asyncHandler(async (req: Request, res: Response) => {
+export const getUserProfile = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
   const user = await User.findById(id);
 
@@ -120,6 +120,162 @@ exports.getUserProfile = asyncHandler(async (req: Request, res: Response) => {
       message: "User not found",
       success: false,
       error: `User ${id} not found`,
+    });
+  }
+});
+
+/**
+ * @description Update user profile
+ * @route PUT /api/auth/update/me
+ * @access Private
+ * @returns {Object} User
+ */
+
+export const updateUserProfile = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (user) {
+      user.username = req.body.username || user.username;
+      user.email = req.body.email || user.email;
+
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+
+      const updatedUser = await user.save();
+
+      res.status(200).json({
+        _id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        isProfessional: updatedUser.isProfessional,
+        token: generateToken(updatedUser._id),
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      message: "The user could not be updated",
+      success: false,
+      error: `${error}`,
+    });
+  }
+});
+
+/**
+ * @description Get all users
+ * @route GET /api/auth/users
+ * @access Private/Admin
+ * @returns {Object} Users
+ */
+
+export const getUsers = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json({
+      message: "All users",
+      users: users,
+      success: true,
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: "The users could not be retrieved",
+      success: false,
+      error: `${error}`,
+    });
+  }
+});
+
+/**
+ * @description Delete user
+ * @route DELETE /api/auth/delete/:id
+ * @access Private/Admin
+ */
+
+export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (user) {
+      await user.remove();
+      res.status(200).json({
+        message: "User deleted",
+        success: true,
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      message: "The user could not be deleted",
+      success: false,
+      error: `${error}`,
+    });
+  }
+});
+
+/**
+ * @description Get user by id
+ * @route GET /api/auth/user/:id
+ * @access Private/Admin
+ * @returns {Object} User
+ */
+
+export const getUserById = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (user) {
+      res.status(200).json({
+        message: `User profile for ${user.username}`,
+        user: user,
+        success: true,
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      message: "The user could not be retrieved",
+      success: false,
+      error: `${error}`,
+    });
+  }
+});
+
+/**
+ * @description Update user by id
+ * @route PUT /api/auth/update/:id
+ * @access Private/Admin
+ * @returns {Object} User
+ */
+
+export const updateUserById = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (user) {
+      user.username = req.body.username || user.username;
+      user.email = req.body.email || user.email;
+      user.isAdmin = req.body.isAdmin;
+      user.isProfessional = req.body.isProfessional;
+
+      const updatedUser = await user.save();
+
+      res.status(200).json({
+        _id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        isProfessional: updatedUser.isProfessional,
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      message: "The user could not be updated",
+      success: false,
+      error: `${error}`,
     });
   }
 });
