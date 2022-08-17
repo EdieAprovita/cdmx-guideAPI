@@ -15,18 +15,19 @@ import generateToken from "../utils/generateToken";
 export const login = asyncHandler(async (req: Request, res: Response | any): Promise<void> => {
   try {
     const body = req.body as Pick<IUser, "username" | "password">;
+    const { username, password } = body;
 
-    const user = await User.findOne({ username: body.username });
+    const user = await User.findOne({ username: username });
 
     if (!user) {
       return res.status(401).json({
         message: "Invalid credentials",
         success: false,
-        error: `User ${body.username} not found`,
+        error: `User ${username} not found`,
       });
     }
 
-    const isMatch = user.isModified(body.password);
+    const isMatch = user.isModified(password);
 
     if (!isMatch) {
       return res.status(400).json({ error: "Invalid credentials" });
@@ -64,15 +65,16 @@ export const login = asyncHandler(async (req: Request, res: Response | any): Pro
 
 export const register = asyncHandler(async (req: Request, res: Response | any) => {
   try {
-    const { username, email, password, role } = req.body;
+    const body = req.body as Pick<IUser, "username" | "password" | "email" | "role">;
+    const { username, email, password, role } = body;
 
-    const userExists = await User.findOne({ username });
+    const userExists = await User.findOne({ email: email });
 
     if (userExists) {
       return res.status(400).json({
         message: "User already exists",
         success: false,
-        error: `User ${username} already exists`,
+        error: `User ${username} with email: ${email} already exists`,
       });
     }
 
@@ -109,7 +111,7 @@ export const register = asyncHandler(async (req: Request, res: Response | any) =
  * @returns {Object} User
  */
 
-export const getUserProfile = asyncHandler(async (req: Request, res: Response) => {
+export const getUserProfileById = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
   const user = await User.findById(id);
 
@@ -140,7 +142,7 @@ export const getUserProfile = asyncHandler(async (req: Request, res: Response) =
  * @returns {Object} User
  */
 
-export const updateUserProfile = asyncHandler(async (req: Request, res: Response) => {
+export const updateUserProfileById = asyncHandler(async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -182,7 +184,7 @@ export const updateUserProfile = asyncHandler(async (req: Request, res: Response
 
 export const getUsers = asyncHandler(async (req: Request, res: Response) => {
   try {
-    const users = await User.find({});
+    const users: IUser[] = await User.find();
     res.status(200).json({
       message: "All users",
       users: users,
@@ -231,7 +233,7 @@ export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
  * @returns {Object} User
  */
 
-export const getUserById = asyncHandler(async (req: Request, res: Response) => {
+export const getUserByIdAdmin = asyncHandler(async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -259,7 +261,7 @@ export const getUserById = asyncHandler(async (req: Request, res: Response) => {
  * @returns {Object} User
  */
 
-export const updateUserById = asyncHandler(async (req: Request, res: Response) => {
+export const updateUserByIdAdmin = asyncHandler(async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
