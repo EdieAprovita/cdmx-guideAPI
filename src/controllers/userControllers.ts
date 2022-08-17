@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 
+import { IUser } from "../interfaces/interfaceModels";
 import User from "../models/User";
 import generateToken from "../utils/generateToken";
 
@@ -11,39 +12,47 @@ import generateToken from "../utils/generateToken";
  * @returns {Object} User
  */
 
-export const login = asyncHandler(async (req: Request, res: Response | any) => {
-  const { username, password } = req.body;
+export const login = asyncHandler(async (req: Request, res: Response | any): Promise<void> => {
+  try {
+    const body = req.body as Pick<IUser, "username" | "password">;
 
-  const user = await User.findOne({ username });
+    const user = await User.findOne({ username: body.username });
 
-  if (!user) {
-    return res.status(401).json({
-      message: "Invalid credentials",
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+        success: false,
+        error: `User ${body.username} not found`,
+      });
+    }
+
+    const isMatch = user.isModified(body.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
+
+    const token = generateToken(user._id);
+
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        role: user.role,
+        email: user.email,
+        photo: user.photo,
+        isAdmin: user.isAdmin,
+        isProfessional: user.isProfessional,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
       success: false,
-      error: `User ${username} not found`,
+      error: `${error}`,
     });
   }
-
-  const isMatch = await user.isModified(password);
-
-  if (!isMatch) {
-    return res.status(400).json({ error: "Invalid credentials" });
-  }
-
-  const token = generateToken(user._id);
-
-  res.status(200).json({
-    token,
-    user: {
-      id: user._id,
-      username: user.username,
-      role: user.role,
-      email: user.email,
-      photo: user.photo,
-      isAdmin: user.isAdmin,
-      isProfessional: user.isProfessional,
-    },
-  });
 });
 
 /**

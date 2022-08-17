@@ -1,6 +1,6 @@
-import { Types } from "mongoose";
+import { Document, Types } from "mongoose";
 
-export interface IUser {
+export interface IUser extends Document {
   _id?: string;
   username: string;
   password: string;
@@ -11,7 +11,7 @@ export interface IUser {
   isProfessional: boolean;
 }
 
-export interface Business {
+export interface Business extends Document {
   _id?: string;
   name: string;
   author: Types.ObjectId;
@@ -36,7 +36,7 @@ export interface Business {
   };
 }
 
-export interface Doctor {
+export interface Doctor extends Document {
   _id?: string;
   name: string;
   author: string;
@@ -60,7 +60,7 @@ export interface Doctor {
   };
 }
 
-export interface Market {
+export interface Market extends Document {
   _id?: string;
   name: string;
   author: string;
@@ -76,7 +76,7 @@ export interface Market {
   };
 }
 
-export interface Post {
+export interface Post extends Document {
   _id?: string;
   user: string;
   text: string;
@@ -99,7 +99,7 @@ export interface Post {
   };
 }
 
-export interface Profession {
+export interface Profession extends Document {
   _id?: string;
   professionName: string;
   author: Types.ObjectId;
@@ -121,7 +121,7 @@ export interface Profession {
   };
 }
 
-export interface Review {
+export interface Review extends Document {
   _id?: string;
   username: string;
   rating: number;
@@ -133,7 +133,7 @@ export interface Review {
   };
 }
 
-export interface ProfessionProfile {
+export interface ProfessionProfile extends Document {
   _id?: string;
   user: Types.ObjectId;
   contact: [{ phone: number; email: string }];
@@ -176,7 +176,7 @@ export interface ProfessionProfile {
   };
 }
 
-export interface Recipe {
+export interface Recipe extends Document {
   _id?: string;
   title: string;
   author: Types.ObjectId;
@@ -197,7 +197,7 @@ export interface Recipe {
   };
 }
 
-export interface Restaurant {
+export interface Restaurant extends Document {
   _id?: string;
   name: string;
   author: Types.ObjectId;
