@@ -8,6 +8,7 @@
 		"start": "ts-node ./src/server.ts",
 		"start:prod": "npm run build && node ./dist/src/server.js",
 		"start:nodemon": "./node_modules/bin/nodemon.js",
+		"dev":"concurrently \"npx tsc --watch\" \"nodemon -q dist/src/server.js\"",
 		"build": "npx tsc"
 	},
 	"keywords": [],
