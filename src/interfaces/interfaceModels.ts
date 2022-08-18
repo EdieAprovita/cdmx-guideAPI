@@ -1,5 +1,12 @@
 import { Document, Types } from "mongoose";
 
+declare global {
+  namespace Express {
+    interface Request {
+      user: string;
+    }
+  }
+}
 export interface IUser extends Document {
   _id?: string;
   username: string;

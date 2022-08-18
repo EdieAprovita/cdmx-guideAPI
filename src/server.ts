@@ -5,6 +5,7 @@ import morgan from "morgan";
 import path from "path";
 
 import connectDB from "./config/db";
+import users from "./routes/userRoutes";
 
 dotenv.config();
 
@@ -34,9 +35,11 @@ if (process.env.NODE_ENV === "production") {
 }
 const port = process.env.PORT || 5000;
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/veganguideapi", (req: Request, res: Response) => {
   res.status(200).json({ message: "Welcome to the API" });
 });
+
+app.use("/veganguideapi/users", users);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
