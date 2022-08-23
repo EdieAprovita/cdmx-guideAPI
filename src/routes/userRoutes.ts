@@ -10,7 +10,7 @@ import {
   register,
   updateUserByIdAdmin,
   updateUserProfileById,
-} from "../controllers/userControllers";
+} from "../controllers/userControllers"; 
 
 //USER ROUTES
 router.get("/users", getUsers);
