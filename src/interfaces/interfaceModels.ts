@@ -73,7 +73,7 @@ export interface IDoctor extends Document {
 export interface IMarket extends Document {
   _id?: string;
   marketName: string;
-  author: string;
+  author: Types.ObjectId;
   address: string;
   image: string;
   typeMarket: string;
