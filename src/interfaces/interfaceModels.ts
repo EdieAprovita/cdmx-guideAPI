@@ -48,8 +48,8 @@ export interface IBusiness extends Document {
 
 export interface IDoctor extends Document {
   _id?: string;
-  name: string;
-  author: string;
+  doctorName: string;
+  author: Types.ObjectId;
   address: string;
   image: string;
   specialty: string;
@@ -72,7 +72,7 @@ export interface IDoctor extends Document {
 
 export interface IMarket extends Document {
   _id?: string;
-  name: string;
+  marketName: string;
   author: string;
   address: string;
   image: string;
@@ -209,7 +209,7 @@ export interface IRecipe extends Document {
 
 export interface IRestaurant extends Document {
   _id?: string;
-  name: string;
+  restaurantName: string;
   author: Types.ObjectId;
   typePlace: string;
   address: string;
