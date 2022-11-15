@@ -11,7 +11,7 @@
 		"dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/src/server.js\"",
 		"build": "npx tsc",
 		"lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
-		"test": "jest"
+		"test": "jest --passWithNoTests"
 	},
 	"keywords": [],
 	"author": "Edgar Chavero <edieveg316@gmail.com> (https://www.linkedin.com/in/edgar-chavero/)",
