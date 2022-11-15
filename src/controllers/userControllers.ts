@@ -21,9 +21,9 @@ export const login = asyncHandler(async (req: Request, res: Response | any): Pro
 
     if (!user) {
       return res.status(401).json({
-        message: "Invalid credentials",
+        message: `User ${username} not found`,
         success: false,
-        error: `User ${username} not found`,
+        error: Error,
       });
     }
 
@@ -290,3 +290,4 @@ export const updateUserByIdAdmin = asyncHandler(async (req: Request, res: Respon
     });
   }
 });
+

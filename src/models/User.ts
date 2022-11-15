@@ -11,6 +11,10 @@ const userSchema = new Schema<IUser>(
       required: true,
       unique: true,
     },
+    password: {
+      type: String,
+      required: true,
+    },
     role: {
       type: String,
       required: true,
@@ -26,10 +30,6 @@ const userSchema = new Schema<IUser>(
       type: String,
       // eslint-disable-next-line prettier/prettier
       default: "https://res.cloudinary.com/dzqbzqgjm/image/upload/v1599098981/default-user_qjqjqz.png",
-    },
-    password: {
-      type: String,
-      required: true,
     },
     isAdmin: {
       type: Boolean,
@@ -63,3 +63,4 @@ userSchema.pre("save", async function (next) {
 
 const User = mongoose.model<IUser>("User", userSchema);
 export default User;
+

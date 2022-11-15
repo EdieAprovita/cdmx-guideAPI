@@ -1,5 +1,8 @@
 {
   "singleQuote": false,
   "trailingComma": "es5",
-  "printWidth": 130
+  "printWidth": 90,
+  "tabWidth": 2,
+  "arrowParens": "avoid",
+  "quoteProps": "as-needed"
 }

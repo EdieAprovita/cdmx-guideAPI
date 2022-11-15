@@ -17,7 +17,7 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as IUser;
 
-      req.user = (await User.findById(decoded.id).select("-password")) as unknown as Request["user"];
+      req.user = User.findById(decoded.id).select("-password") as unknown as Request["user"];
 
       next();
     } catch (error) {
@@ -71,4 +71,4 @@ export const professional = async (req: Request, res: Response, next: NextFuncti
       error: "You are not a professional",
     });
   }
-}
+};

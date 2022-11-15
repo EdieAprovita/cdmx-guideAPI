@@ -10,6 +10,8 @@
       },
       "extends": [
         "plugin:@typescript-eslint/recommended",
+        "airbnb-typescript/base",
+        "prettier/@typescript-eslint",
         "plugin:prettier/recommended",
         "@salesforce/tslint-config-lwc/recommended"
       ],
@@ -17,6 +19,8 @@
         "max-len": "off",
         "no-underscore-dangle": "off",
         "arrow-body-style": "off",
+        "no-unused-vars":"warn",
+        "prettier/prettier": "error",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
