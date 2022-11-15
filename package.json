@@ -10,7 +10,9 @@
 		"start:nodemon": "./node_modules/bin/nodemon.js",
 		"dev":"concurrently \"npx tsc --watch\" \"nodemon -q dist/src/server.js\"",
 		"build": "npx tsc",
-		"lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
+		"lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+		    "test": "react-scripts test"
+
 	},
 	"keywords": [],
 	"author": "Edgar Chavero <edieveg316@gmail.com> (https://www.linkedin.com/in/edgar-chavero/)",
