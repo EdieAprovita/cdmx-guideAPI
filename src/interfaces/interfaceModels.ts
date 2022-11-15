@@ -21,9 +21,9 @@ export interface IUser extends Document {
   isProfessional: boolean;
 }
 
-export interface Business extends Document {
+export interface IBusiness extends Document {
   _id?: string;
-  name: string;
+  namePlace: string;
   author: Types.ObjectId;
   address: string;
   image: string;
@@ -46,7 +46,7 @@ export interface Business extends Document {
   };
 }
 
-export interface Doctor extends Document {
+export interface IDoctor extends Document {
   _id?: string;
   name: string;
   author: string;
@@ -70,7 +70,7 @@ export interface Doctor extends Document {
   };
 }
 
-export interface Market extends Document {
+export interface IMarket extends Document {
   _id?: string;
   name: string;
   author: string;
@@ -86,7 +86,7 @@ export interface Market extends Document {
   };
 }
 
-export interface Post extends Document {
+export interface IPost extends Document {
   _id?: string;
   user: string;
   text: string;
@@ -109,7 +109,7 @@ export interface Post extends Document {
   };
 }
 
-export interface Profession extends Document {
+export interface IProfession extends Document {
   _id?: string;
   professionName: string;
   author: Types.ObjectId;
@@ -131,7 +131,7 @@ export interface Profession extends Document {
   };
 }
 
-export interface Review extends Document {
+export interface IReview extends Document {
   _id?: string;
   username: string;
   rating: number;
@@ -143,7 +143,7 @@ export interface Review extends Document {
   };
 }
 
-export interface ProfessionProfile extends Document {
+export interface IProfessionProfile extends Document {
   _id?: string;
   user: Types.ObjectId;
   contact: [{ phone: number; email: string }];
@@ -186,7 +186,7 @@ export interface ProfessionProfile extends Document {
   };
 }
 
-export interface Recipe extends Document {
+export interface IRecipe extends Document {
   _id?: string;
   title: string;
   author: Types.ObjectId;
@@ -207,7 +207,7 @@ export interface Recipe extends Document {
   };
 }
 
-export interface Restaurant extends Document {
+export interface IRestaurant extends Document {
   _id?: string;
   name: string;
   author: Types.ObjectId;
