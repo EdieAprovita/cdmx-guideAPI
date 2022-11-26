@@ -29,7 +29,8 @@ const userSchema = new Schema<IUser>(
     photo: {
       type: String,
       // eslint-disable-next-line prettier/prettier
-      default: "https://res.cloudinary.com/dzqbzqgjm/image/upload/v1599098981/default-user_qjqjqz.png",
+      default:
+        "https://res.cloudinary.com/dzqbzqgjm/image/upload/v1599098981/default-user_qjqjqz.png",
     },
     isAdmin: {
       type: Boolean,
@@ -49,7 +50,7 @@ const userSchema = new Schema<IUser>(
 
 // eslint-disable-next-line prettier/prettier
 userSchema.methods.isCorrectPassword = async function (candidatePassword: string) {
-  return await bcrypt.compare(candidatePassword, this.password);
+  return bcrypt.compare(candidatePassword, this.password);
 };
 
 // hash the password before saving
@@ -63,4 +64,3 @@ userSchema.pre("save", async function (next) {
 
 const User = mongoose.model<IUser>("User", userSchema);
 export default User;
-
