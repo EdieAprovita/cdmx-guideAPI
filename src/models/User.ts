@@ -28,7 +28,6 @@ const userSchema = new Schema<IUser>(
     },
     photo: {
       type: String,
-      // eslint-disable-next-line prettier/prettier
       default:
         "https://res.cloudinary.com/dzqbzqgjm/image/upload/v1599098981/default-user_qjqjqz.png",
     },
@@ -48,7 +47,6 @@ const userSchema = new Schema<IUser>(
 
 // check if password is correct
 
-// eslint-disable-next-line prettier/prettier
 userSchema.methods.isCorrectPassword = async function (candidatePassword: string) {
   return bcrypt.compare(candidatePassword, this.password);
 };
