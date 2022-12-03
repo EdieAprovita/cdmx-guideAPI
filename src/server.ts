@@ -1,8 +1,8 @@
+import path from "path";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
-import path from "path";
 
 import connectDB from "./config/db";
 import users from "./routes/userRoutes";
