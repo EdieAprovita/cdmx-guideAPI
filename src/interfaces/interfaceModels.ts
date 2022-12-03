@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import { Document, Types } from "mongoose";
 
 declare global {
@@ -88,14 +89,13 @@ export interface IMarket extends Document {
 
 export interface IPost extends Document {
   _id?: string;
-  user: string;
+  author: Types.ObjectId;
   text: string;
-  name: string;
   avatar: string;
-  likes: [{ user: Types.ObjectId }];
+  likes: [{ username: Types.ObjectId }];
   comments: [
     {
-      user: Types.ObjectId;
+      username: Types.ObjectId;
       text: string;
       name: string;
       avatar: string;

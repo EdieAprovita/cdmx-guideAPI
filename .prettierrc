@@ -4,5 +4,9 @@
   "printWidth": 90,
   "tabWidth": 2,
   "arrowParens": "avoid",
-  "quoteProps": "as-needed"
+  "quoteProps": "as-needed",
+  "useTabs": false,
+  "bracketSameLine": true,
+  "indent_size": 2,
+  "indent_style": "space"
 }

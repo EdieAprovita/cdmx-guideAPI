@@ -2,47 +2,47 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 import { IMarket } from "src/interfaces/interfaceModels";
+import Review from "./Review";
 
 const marketSchema = new Schema<IMarket>(
-    {
-        marketName: {
-            type: String,
-            required: true,
-            unique: true,
-        },
-        author: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-        },
-        address: {
-            type: String,
-            required: true,
-        },
-        image: {
-            type: String,
-            required: true,
-        },
-        typeMarket: {
-            type: String,
-            required: true,
-            enum: ["supermarket", "convenience store", "grocery store"],
-        },
-        reviews: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "Review",
-            },
-        ],
-        rating: {
-            type: Number,
-            required: true,
-        },
-        numReviews: {
-            type: Number,
-            required: true,
-        },
+  {
+    marketName: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    { timestamps: true }
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    typeMarket: {
+      type: String,
+      required: true,
+      enum: ["supermarket", "convenience store", "grocery store"],
+    },
+    reviews: [
+      {
+        type: [Review.schema],
+      },
+    ],
+    rating: {
+      type: Number,
+      required: true,
+    },
+    numReviews: {
+      type: Number,
+      required: true,
+    },
+  },
+  { timestamps: true }
 );
 
 const Market = mongoose.model<IMarket>("Market", marketSchema);
